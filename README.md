@@ -1,5 +1,7 @@
 # Django-slack
 
+[![CI](https://github.com/betaflag/django_slack/actions/workflows/ci.yml/badge.svg)](https://github.com/betaflag/django_slack/actions/workflows/ci.yml)
+
 This is a sample application I made for teaching how to integrate [Slack](https://slack.com) with Django.
 
 With these principles, you can :

@@ -6,12 +6,21 @@ With these principles, you can :
 
 - Interact with your Django application directly from Slack using a [Slash Command](https://api.slack.com/interactivity/slash-commands).
 - Send the content of a form in Slack instead of using Emails using [`Django Forms`](https://docs.djangoproject.com/en/4.1/topics/forms/)
-- Send a message in Slack based on events in your application (ex: when a new user signs up)
+- Send a message in Slack based on [Django Signal](https://docs.djangoproject.com/en/4.1/topics/signals/) in your application (ex: when a new user signs up)
 - And many more
 
 ## django_slack (Django Project)
 
 This is the Django project folder containing the `settings.py` and the main `urls.py`.
+
+### Start the project
+
+Once you created an app and have written your credentials in `.env` you can install the dependencies and run the project mostly like any other Django project.
+
+```sh
+pip install -r requirements.txt
+python manage.py runserver
+```
 
 ### Settings
 
@@ -30,15 +39,6 @@ SLACK_TOKEN=paste_your_slack_token_here
 SLACK_SIGNING_SECRET=paste_your_slack_signing_secret_here
 ```
 
-### Start the project
-
-Once you created an app and have written your credentials in `.env` you can install the dependencies and run the project mostly like any other Django project.
-
-```sh
-pip install -r requirements.txt
-python manage.py runserver
-```
-
 ### DX Extra
 
 I've added a few extra to this project to improve the developer experience. They will be installed with pip.
@@ -47,6 +47,7 @@ I've added a few extra to this project to improve the developer experience. They
 - [autopep8](https://pypi.org/project/autopep8/) A formatter for PEP8 Style Guide for Python Code
 - [pytest](https://docs.pytest.org/) Unit test framework that improves on Python's unittest library
 - [python-dotenv](https://saurabh-kumar.com/python-dotenv/) Reads from `.env` and sets them as environnement variables
+- [isort](https://pycqa.github.io/isort/) isort your imports, so you don't have to.
 
 I've also added the depencencies and config required for their setup and their integration into VSCode.
 

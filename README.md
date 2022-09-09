@@ -29,7 +29,7 @@ python manage.py runserver
 
 You can start the test suite simply by typing `pytest` in a terminal or you can run them directly in VSCode
 
-!(Pytest from VSCode)[screen-pytest.png?raw=true]
+![Pytest from VSCode](screen-pytest.png?raw=true)
 
 ### Settings
 

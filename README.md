@@ -59,7 +59,8 @@ I've added a few extra to this project to improve the developer experience. They
 - [autopep8](https://pypi.org/project/autopep8/) A formatter for PEP8 Style Guide for Python Code
 - [pytest](https://docs.pytest.org/) Unit test framework that improves on Python's unittest library
 - [python-dotenv](https://saurabh-kumar.com/python-dotenv/) Reads from `.env` and sets them as environnement variables
-- [isort](https://pycqa.github.io/isort/) isort your imports, so you don't have to.
+- [isort](https://pycqa.github.io/isort/) Sort your imports, so you don't have to.
+- [Github Actions](https://github.com/features/actions) Automatically run tests on every push
 - `.vscode/settings.json` to integrate all of this with [VSCode](https://code.visualstudio.com/)
 
 I've also added the depencencies and config required for their setup and their integration into VSCode.

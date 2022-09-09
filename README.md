@@ -1,4 +1,4 @@
-# Django-slack
+# django_slack
 
 [![CI](https://github.com/betaflag/django_slack/actions/workflows/ci.yml/badge.svg)](https://github.com/betaflag/django_slack/actions/workflows/ci.yml)
 
@@ -7,7 +7,7 @@ This is a sample application I made for teaching how to integrate [Slack](https:
 With these principles, you can :
 
 - Interact with your Django application directly from Slack using a [Slash Command](https://api.slack.com/interactivity/slash-commands).
-- Send the content of a form in Slack instead of using Emails using [`Django Forms`](https://docs.djangoproject.com/en/4.1/topics/forms/)
+- Send the content of a form in Slack instead of using Emails using [Django Forms](https://docs.djangoproject.com/en/4.1/topics/forms/)
 - Send a message in Slack based on [Django Signal](https://docs.djangoproject.com/en/4.1/topics/signals/) in your application (ex: when a new user signs up)
 - And many more
 
@@ -19,19 +19,13 @@ This is the Django project folder containing the `settings.py` and the main `url
 
 ### Start the project
 
-Once you created an app and have written your credentials in `.env` you can install the dependencies and run the project mostly like any other Django project.
+Once you created a Slack App and have written your credentials in `.env` (see below) you can install the dependencies and run the project mostly like any other Django project.
 
 ```sh
 source .venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
-
-### Test the project
-
-You can start the test suite simply by typing `pytest` in a terminal or you can run them directly in VSCode
-
-![Pytest from VSCode](screen-pytest.png?raw=true)
 
 ### Settings
 
@@ -63,7 +57,13 @@ I've added a few extra to this project to improve the developer experience. They
 - [Github Actions](https://github.com/features/actions) Automatically run tests on every push
 - `.vscode/settings.json` to integrate all of this with [VSCode](https://code.visualstudio.com/)
 
-I've also added the depencencies and config required for their setup and their integration into VSCode.
+I've also added the depencencies and config required for their integration with Django and VSCode.
+
+### Test the project
+
+You can start the test suite simply by typing `pytest` in a terminal or you can run them directly in VSCode
+
+![Pytest from VSCode](screen-pytest.png?raw=true)
 
 ## slack_button (Django App)
 
@@ -123,6 +123,7 @@ Signals are attach to `post_save` and `post_delete` to send a notfication in Sla
 
 ```py
 # signals.py
+
 from django.conf import settings
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
@@ -152,29 +153,9 @@ def todo_notify_delete(instance, **_kwargs):
 
 This app uses a plain [function view](https://docs.djangoproject.com/en/4.1/topics/http/views/) to receive events from Slack API. This is where we'll need the [Slack Signing Secret](https://api.slack.com/authentication/verifying-requests-from-slack). It will verify that the request really comes from Slack.
 
-```py
-from django.conf import settings
-from django.http import HttpResponseForbidden, JsonResponse
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
-from slack_sdk.signature import SignatureVerifier
-
-
-@require_POST
-@csrf_exempt
-def webhook_view(request):
-    verifier = SignatureVerifier(signing_secret=settings.SLACK_SIGNING_SECRET)
-    if not verifier.is_valid_request(request.body.decode("utf-8"), request.headers):
-        return HttpResponseForbidden()
-    return JsonResponse({"text": "Hello from Django!"})
-
-```
-
 But first we need to setup a [Slash Command](https://api.slack.com/interactivity/slash-commands).
 
 ![Setup a Slash Command](screen-slash-command.png?raw=true)
-
-### Request URL
 
 Slack will need a URL to send information to. If you're running the app locally, your laptop is probably not configured to be reachable from the internet. For this, I use popular reverse proxy called [ngrok](https://ngrok.io).
 
@@ -192,8 +173,30 @@ Forwarding                    https://0d33-24-48-109-62.ngrok.io -> http://local
 
 If you click on the https url (ex: https://0d33-24-48-109-62.ngrok.io) you'll be able to access your local application from the internet.
 
-The **Slash Command Request URL**, use this URL but append the path to our webhook (`/slack-webhook/`) which gives somethings like
+For the **Slash Command Request URL**, use this URL but append the path to our webhook (`/slack-webhook/`) which gives somethings like
 
 ```
 https://xxxx-xx-xx-xxx-xx.ngrok.io/slack-webhook/
+```
+
+The final code looks like :
+
+```py
+# views.py
+
+from django.conf import settings
+from django.http import HttpResponseForbidden, JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from slack_sdk.signature import SignatureVerifier
+
+
+@require_POST
+@csrf_exempt
+def webhook_view(request):
+    verifier = SignatureVerifier(signing_secret=settings.SLACK_SIGNING_SECRET)
+    if not verifier.is_valid_request(request.body.decode("utf-8"), request.headers):
+        return HttpResponseForbidden()
+    return JsonResponse({"text": "Hello from Django!"})
+
 ```

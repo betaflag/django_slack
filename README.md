@@ -9,6 +9,8 @@ With these principles, you can :
 - Send a message in Slack based on [Django Signal](https://docs.djangoproject.com/en/4.1/topics/signals/) in your application (ex: when a new user signs up)
 - And many more
 
+All this code comes with unit tests, enjoy!
+
 ## django_slack (Django Project)
 
 This is the Django project folder containing the `settings.py` and the main `urls.py`.
@@ -22,6 +24,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+### Test the project
+
+You can start the test suite simply by typing `pytest` in a terminal or you can run them directly in VSCode
+
+!(Pytest from VSCode)[screen-pytest.png?raw=true]
 
 ### Settings
 

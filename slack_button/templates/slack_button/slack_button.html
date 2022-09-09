@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Slack Button</title>
+  </head>
+  <body>
+    <form method="post">{% csrf_token %} {{form}} <input type="submit" /></form>
+    {{ messages|join:", " }}
+  </body>
+</html>

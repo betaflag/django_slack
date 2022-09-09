@@ -18,6 +18,7 @@ This is the Django project folder containing the `settings.py` and the main `url
 Once you created an app and have written your credentials in `.env` you can install the dependencies and run the project mostly like any other Django project.
 
 ```sh
+source .venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
@@ -43,11 +44,13 @@ SLACK_SIGNING_SECRET=paste_your_slack_signing_secret_here
 
 I've added a few extra to this project to improve the developer experience. They will be installed with pip.
 
+- [venv](https://docs.python.org/3/library/venv.html) Python's virtual environnement tool to isolate project and dependencies
 - [Pylint](https://pypi.org/project/pylint/) A static code analyzer to enforce best practices and python standards
 - [autopep8](https://pypi.org/project/autopep8/) A formatter for PEP8 Style Guide for Python Code
 - [pytest](https://docs.pytest.org/) Unit test framework that improves on Python's unittest library
 - [python-dotenv](https://saurabh-kumar.com/python-dotenv/) Reads from `.env` and sets them as environnement variables
 - [isort](https://pycqa.github.io/isort/) isort your imports, so you don't have to.
+- `.vscode/settings.json` to integrate all of this with [VSCode](https://code.visualstudio.com/)
 
 I've also added the depencencies and config required for their setup and their integration into VSCode.
 
